@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un lien de paiement - Djibli</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f5f5;
+        }
+        .phone-frame {
+            max-width: 390px;
+            min-height: 844px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 0 10px #000;
+        }
+        .status-bar {
+            padding: 14px 24px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+        }
+        .button-primary {
+            background: #6366F1;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            width: 100%;
+            text-align: center;
+            font-weight: 500;
+        }
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            margin-top: 4px;
+        }
+        .form-label {
+            font-size: 14px;
+            color: #374151;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <div class="status-bar">
+            <span>9:41</span>
+            <div class="flex items-center gap-1">
+                <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
+                    <path d="M1 4.5C1 2.84315 2.34315 1.5 4 1.5H12C13.6569 1.5 15 2.84315 15 4.5V7.5C15 9.15685 13.6569 10.5 12 10.5H4C2.34315 10.5 1 9.15685 1 7.5V4.5Z" stroke="black"/>
+                    <path d="M15.5 5.5V6.5" stroke="black" stroke-linecap="round"/>
+                </svg>
+                <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
+                    <path d="M1 1.5H15M1 6H15M1 10.5H15" stroke="black" stroke-width="2"/>
+                </svg>
+            </div>
+        </div>
+
+        <main class="p-6">
+            <div class="flex items-center gap-4 mb-8">
+                <button onclick="window.location.href='wallet.html'">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M15 18L9 12L15 6" stroke="black" stroke-width="2"/>
+                    </svg>
+                </button>
+                <h1 class="text-2xl font-semibold">Créer un lien de paiement</h1>
+            </div>
+
+            <form id="paymentForm" class="space-y-6">
+                <div>
+                    <label class="form-label">Type</label>
+                    <select class="form-input" onchange="toggleFields()">
+                        <option value="product">Produit à vendre</option>
+                        <option value="delivery">Commande avec livraison</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="form-label">Nom du produit</label>
+                    <input type="text" class="form-input" placeholder="ex: iPhone 13">
+                </div>
+
+                <div>
+                    <label class="form-label">Montant</label>
+                    <input type="number" class="form-input" placeholder="0 DA">
+                </div>
+
+                <div id="deliveryFields" class="space-y-6 hidden">
+                    <div>
+                        <label class="form-label">Point relais de livraison</label>
+                        <select class="form-input">
+                            <option>Point relais Gare routière</option>
+                            <option>Point relais Centre-Ville</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="form-label">Frais de livraison</label>
+                        <input type="number" class="form-input" value="400" readonly>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="form-label">Description (optionnel)</label>
+                    <textarea class="form-input" rows="3" placeholder="Détails du produit..."></textarea>
+                </div>
+
+                <button type="submit" class="button-primary">Générer le lien</button>
+            </form>
+
+            <div id="generatedLink" class="mt-8 hidden">
+                <div class="text-sm text-gray-600 mb-2">Lien de paiement généré</div>
+                <div class="p-4 bg-gray-50 rounded-lg break-all font-mono text-sm">
+                    https://djibli.dz/p/prod_1234567890
+                </div>
+                <button onclick="copyLink()" class="w-full mt-4 py-2 px-4 border border-gray-300 rounded-lg text-sm font-medium">
+                    Copier le lien
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function toggleFields() {
+            const deliveryFields = document.getElementById('deliveryFields');
+            const select = document.querySelector('select');
+            deliveryFields.classList.toggle('hidden', select.value !== 'delivery');
+        }
+
+        document.getElementById('paymentForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            document.getElementById('generatedLink').classList.remove('hidden');
+        });
+
+        function copyLink() {
+            const link = document.querySelector('#generatedLink .font-mono').textContent;
+            navigator.clipboard.writeText(link);
+            alert('Lien copié !');
+        }
+    </script>
+</body>
+</html>

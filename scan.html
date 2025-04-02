@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scanner - Djibli</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="main-content">
+        <!-- Header -->
+        <header class="flex items-center justify-between mb-8">
+            <button onclick="window.history.back()" class="p-2 text-gray-600 hover:text-gray-900">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+            </button>
+            <h1 class="text-xl font-semibold">Scanner</h1>
+            <div class="w-8"></div>
+        </header>
+
+        <!-- Scanner View -->
+        <div class="mb-8">
+            <div class="aspect-square bg-gray-900 rounded-2xl mb-4 flex items-center justify-center">
+                <div class="text-white text-center p-8">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="mx-auto mb-4">
+                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                        <path d="M7 7h3v3H7zM14 7h3v3h-3zM7 14h3v3H7z"/>
+                        <line x1="14" y1="14" x2="17" y2="14"/>
+                        <line x1="14" y1="17" x2="17" y2="17"/>
+                    </svg>
+                    <p>Placez le code QR dans le cadre</p>
+                </div>
+            </div>
+            <button onclick="showScanResult()" class="button-primary w-full">Scanner manuellement</button>
+        </div>
+
+        <!-- Instructions selon le rôle -->
+        <div class="space-y-6">
+            <div class="card" id="clientInstructions">
+                <h2 class="text-lg font-medium mb-4">Instructions Client</h2>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">1</div>
+                        <p class="text-sm">Scannez le code QR sur votre colis</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">2</div>
+                        <p class="text-sm">Vérifiez les informations du colis</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">3</div>
+                        <p class="text-sm">Confirmez la réception</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card hidden" id="relaisInstructions">
+                <h2 class="text-lg font-medium mb-4">Instructions Point Relais</h2>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">1</div>
+                        <p class="text-sm">Scannez le code QR du colis à l'arrivée</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">2</div>
+                        <p class="text-sm">Vérifiez l'état du colis</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">3</div>
+                        <p class="text-sm">Confirmez la réception au point relais</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">4</div>
+                        <p class="text-sm">Scannez à nouveau lors de la remise au client</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card hidden" id="chauffeurInstructions">
+                <h2 class="text-lg font-medium mb-4">Instructions Chauffeur</h2>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-4">
+                        <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">1</div>
+                        <p class="text-sm">Scannez le code QR à la prise en charge</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">2</div>
+                        <p class="text-sm">Vérifiez la destination et l'itinéraire</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">3</div>
+                        <p class="text-sm">Scannez à la livraison au point relais/client</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center text-primary">4</div>
+                        <p class="text-sm">Obtenez la signature du destinataire</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de résultat de scan -->
+    <div id="scanResultModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-semibold">Résultat du scan</h3>
+                <button onclick="hideModal('scanResult')" class="text-gray-500 hover:text-gray-700">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <div class="p-4 bg-green-50 rounded-lg">
+                    <div class="font-medium text-green-800">Colis #2024D69D3</div>
+                    <div class="text-sm text-green-600 mt-1">Scan réussi</div>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Status</span>
+                        <span class="font-medium" id="packageStatus">En transit</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Destination</span>
+                        <span class="font-medium">Point Relais Alger Centre</span>
+                    </div>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-gray-600">Client</span>
+                        <span class="font-medium">Mohammed A.</span>
+                    </div>
+                </div>
+                <div class="space-y-2" id="actionButtons">
+                    <button class="button-primary w-full" id="primaryAction">Confirmer la réception</button>
+                    <button class="button-secondary w-full" id="secondaryAction">Signaler un problème</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Détecter le rôle de l'utilisateur (simulé)
+        const userRole = new URLSearchParams(window.location.search).get('role') || 'client';
+        
+        // Afficher les instructions appropriées
+        document.getElementById('clientInstructions').classList.toggle('hidden', userRole !== 'client');
+        document.getElementById('relaisInstructions').classList.toggle('hidden', userRole !== 'relais');
+        document.getElementById('chauffeurInstructions').classList.toggle('hidden', userRole !== 'chauffeur');
+
+        function showScanResult() {
+            // Personnaliser le modal selon le rôle
+            const primaryAction = document.getElementById('primaryAction');
+            const packageStatus = document.getElementById('packageStatus');
+            
+            switch(userRole) {
+                case 'client':
+                    primaryAction.textContent = 'Confirmer la réception';
+                    packageStatus.textContent = 'Prêt à être récupéré';
+                    break;
+                case 'relais':
+                    primaryAction.textContent = 'Confirmer l\'arrivée au point relais';
+                    packageStatus.textContent = 'En attente de réception';
+                    break;
+                case 'chauffeur':
+                    primaryAction.textContent = 'Confirmer la prise en charge';
+                    packageStatus.textContent = 'En attente de ramassage';
+                    break;
+            }
+            
+            document.getElementById('scanResultModal').classList.remove('hidden');
+        }
+
+        function hideModal(type) {
+            document.getElementById(type + 'Modal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missions - Djibli Chauffeur</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f5f5f5;
+        }
+        .phone-frame {
+            max-width: 390px;
+            min-height: 844px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 0 10px #000;
+        }
+        .status-bar {
+            padding: 14px 24px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+        }
+        .button-primary {
+            background: #6366F1;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+        }
+        .button-outline {
+            border: 1px solid #6366F1;
+            color: #6366F1;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .mission-card {
+            border: 1px solid #E5E7EB;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <div class="status-bar">
+            <span>9:41</span>
+            <div class="flex items-center gap-1">
+                <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
+                    <path d="M1 4.5C1 2.84315 2.34315 1.5 4 1.5H12C13.6569 1.5 15 2.84315 15 4.5V7.5C15 9.15685 13.6569 10.5 12 10.5H4C2.34315 10.5 1 9.15685 1 7.5V4.5Z" stroke="black"/>
+                    <path d="M15.5 5.5V6.5" stroke="black" stroke-linecap="round"/>
+                </svg>
+                <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
+                    <path d="M1 1.5H15M1 6H15M1 10.5H15" stroke="black" stroke-width="2"/>
+                </svg>
+            </div>
+        </div>
+
+        <main class="p-6">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center gap-4">
+                    <button onclick="window.location.href='dashboard.html'">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M15 18L9 12L15 6" stroke="black" stroke-width="2"/>
+                        </svg>
+                    </button>
+                    <h1 class="text-2xl font-semibold">Missions à accepter</h1>
+                </div>
+                <button onclick="window.location.href='chauffeur-colis.html'" class="flex items-center gap-2">
+                    <span class="text-indigo-600">Mes colis</span>
+                    <div class="bg-indigo-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm">3</div>
+                </button>
+            </div>
+
+            <div class="space-y-4">
+                <div class="mission-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div class="text-lg font-medium">Nouvelle mission</div>
+                            <div class="text-gray-600 text-sm mt-1">Point relais</div>
+                            <div class="font-medium">Café Errahma</div>
+                        </div>
+                        <div class="text-gray-600">11:00</div>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm text-gray-600 mb-4">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        <span>→</span>
+                        <div>
+                            <div>Point relais Gare routière</div>
+                            <div class="font-medium">4 colis</div>
+                            <div class="text-green-600 font-medium">Gain: 800 DA (200 DA/colis)</div>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <button class="button-outline flex-1">Refuser</button>
+                        <button onclick="window.location.href='chauffeur-colis.html'" class="button-primary flex-1">Accepter</button>
+                    </div>
+                </div>
+
+                <div class="mission-card">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <div class="text-lg font-medium">Nouvelle mission</div>
+                            <div class="text-gray-600 text-sm mt-1">Point relais</div>
+                            <div class="font-medium">Centre-Ville</div>
+                        </div>
+                        <div class="text-gray-600">14:30</div>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm text-gray-600 mb-4">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        <span>→</span>
+                        <div>
+                            <div>Point relais Gare</div>
+                            <div class="font-medium">2 colis</div>
+                            <div class="text-green-600 font-medium">Gain: 400 DA (200 DA/colis)</div>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <button class="button-outline flex-1">Refuser</button>
+                        <button onclick="window.location.href='chauffeur-colis.html'" class="button-primary flex-1">Accepter</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
